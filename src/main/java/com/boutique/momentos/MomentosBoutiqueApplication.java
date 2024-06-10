@@ -9,5 +9,4 @@ public class MomentosBoutiqueApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MomentosBoutiqueApplication.class, args);
 	}
-
 }

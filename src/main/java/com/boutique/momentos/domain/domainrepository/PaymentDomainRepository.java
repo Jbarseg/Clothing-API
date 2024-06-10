@@ -1,5 +1,14 @@
 package com.boutique.momentos.domain.domainrepository;
 
-public class PaymentDomainRepository {
-    
+import java.util.List;
+import java.util.Optional;
+
+import com.boutique.momentos.domain.domainentity.PaymentDomain;
+
+public interface PaymentDomainRepository {
+    List<PaymentDomain> getAll();
+    PaymentDomain savePayment (PaymentDomain paymentDomain);
+    Optional<List<PaymentDomain>> getByUser(String domainIdUser);
+    Optional<PaymentDomain> getPayment(int domainIdPayment);
+    void deletePayment(int domainIdPayment);
 }
