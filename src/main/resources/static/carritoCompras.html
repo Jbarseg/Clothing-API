@@ -85,27 +85,27 @@
         </div>
     </div>
 
-        <!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="paymentModalLabel">Subir Comprobante de Pago</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <form>
-                <div class="mb-3">
-                <label for="paymentImage" class="form-label">Seleccione el archivo de imagen:</label>
-                <input type="file" class="form-control" id="paymentImage">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Subir Comprobante de Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </form>
+                <div class="modal-body">
+                    <form id="paymentForm" onsubmit="uploadImage(event)">
+                        <div class="mb-3">
+                            <label for="paymentImage" class="form-label">Seleccione el archivo de imagen:</label>
+                            <input type="file" class="form-control" id="paymentImage">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="uploadImage(event)">Listo</button>
+                </div>
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary">Listo</button>
-            </div>
-        </div>
         </div>
     </div>
 
@@ -128,7 +128,7 @@
                     <span><strong>${productName}</strong> - Cantidad: ${quantity}</span>
                     <span>Precio: $${price}</span>
                 </div>`;
-            
+
             // Agregar el elemento al contenedor del carrito
             document.getElementById("cart-items").appendChild(newItem);
         }
@@ -140,15 +140,35 @@
 
         // Función para proceder al pago
         function checkout() {
-            alert("Procediendo al pago...");
-            setTimeout(function() {
-                $('#paymentModal').modal('show');
-            }, 1000);
+            $('#paymentModal').modal('show');
         }
 
         // Ejemplo de uso: agregar productos al carrito
         addToCart("Blusa", 2, 30);
         addToCart("Pantalón", 1, 50);
+
+        // Función para enviar la imagen al servidor
+        function uploadImage(event) {
+            event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+            var formData = new FormData();
+            var imageFile = document.getElementById("paymentImage").files[0];
+            formData.append("userId", 2);
+            formData.append("image", imageFile);
+            $.ajax({
+                type: "POST",
+                url: "/api/payments/upload",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log("Imagen subida exitosamente:", response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error al subir la imagen:", error);
+                    // Aquí puedes mostrar un mensaje de error al usuario
+                }
+            });
+        }
     </script>
-</body>
-</html>
+    </body>
+    </html>

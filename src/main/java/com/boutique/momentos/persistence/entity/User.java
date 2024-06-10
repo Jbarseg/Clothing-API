@@ -2,6 +2,7 @@ package com.boutique.momentos.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,45 +11,60 @@ import jakarta.persistence.Table;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private int idUser;
+
     @Column(name = "nombre")
-    private String userName;
+    private String name;
+
     @Column(name = "usuario")
-    private String userRolName;
+    private String username;
+
     @Column(name = "contrasena")
-    private Long userPassword;
-    @Column(name = "id_rol")
-    private int idRol;
+    private String password;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_rol")
+    private Role role;
 
     public int getIdUser() {
         return idUser;
     }
+
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
-    public String getUserName() {
-        return userName;
+
+    public String getName() {
+        return name;
     }
-    public void setUserName(String userName) {
-        this.userName = userName;
+
+    public void setName(String name) {
+        this.name = name;
     }
-    public String getUserRolName() {
-        return userRolName;
+
+    public String getUsername() {
+        return username;
     }
-    public void setUserRolName(String userRolName) {
-        this.userRolName = userRolName;
+
+    public void setUsername(String username) {
+        this.username = username;
     }
-    public Long getUserPassword() {
-        return userPassword;
+
+    public String getPassword() {
+        return password;
     }
-    public void setUserPassword(Long userPassword) {
-        this.userPassword = userPassword;
+
+    public void setPassword(String password) {
+        this.password = password;
     }
-    public int getIdRol() {
-        return idRol;
+
+    public Role getRole() {
+        return role;
     }
-    public void setIdRol(int idRol) {
-        this.idRol = idRol;
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

@@ -78,6 +78,4 @@ public class Payment {
     public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
-
-    
 }

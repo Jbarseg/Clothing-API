@@ -1,5 +1,6 @@
 package com.boutique.momentos.presentation.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,10 +43,9 @@ public class PaymentController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Guardar un nuevo pago
     @PostMapping("/upload")
     public ResponseEntity<PaymentDomain> savePayment(@RequestParam("userId") int userId,
-                                                     @RequestParam("image") MultipartFile imageFile) {
+                                                    @RequestParam("image") MultipartFile imageFile) {
         if (imageFile.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -54,6 +54,9 @@ public class PaymentController {
             PaymentDomain payment = new PaymentDomain();
             payment.setDomainIdUser(userId);
             payment.setDomainImageData(imageData);
+            // Obtener la fecha y hora actuales
+            LocalDateTime paymentDate = LocalDateTime.now();
+            payment.setDomainPaymentDate(paymentDate);
             PaymentDomain savedPayment = paymentService.savePayment(payment);
             return new ResponseEntity<>(savedPayment, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -61,7 +64,6 @@ public class PaymentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     // Eliminar un pago por su ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePayment(@PathVariable("id") int id) {
