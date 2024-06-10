@@ -1,7 +1,6 @@
 package com.boutique.momentos.persistence.repository;
 
 import java.util.List;
-import java.util.Locale.Category;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +34,10 @@ public class PaymentRepository implements PaymentDomainRepository {
     }
 
     @Override
-    public Optional<List<PaymentDomain>> getByUser(String domainIdUser) {
-        return paymentDataRepository.findByIdUser(domainIdUser).map(payments -> paymentMapper.toPaymentsDomain(payments));
-    }
+public Optional<List<PaymentDomain>> getByUser(Integer domainIdUser) {
+    List<Payment> payments = paymentDataRepository.findByIdUser(domainIdUser);
+    return Optional.ofNullable(paymentMapper.toPaymentsDomain(payments));
+}
 
     @Override
     public Optional<PaymentDomain> getPayment(int domainIdPayment) {

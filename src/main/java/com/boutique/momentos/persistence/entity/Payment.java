@@ -62,4 +62,22 @@ public class Payment {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public LocalDateTime getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(LocalDateTime paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public boolean isPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(boolean paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    
 }

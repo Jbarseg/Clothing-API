@@ -36,7 +36,7 @@ public class PaymentController {
 
     // Obtener todos los pagos asociados a un usuario específico
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<PaymentDomain>> getPaymentsByUser(@PathVariable("userId") String userId) {
+    public ResponseEntity<List<PaymentDomain>> getPaymentsByUser(@PathVariable("userId") int userId) {
         Optional<List<PaymentDomain>> payments = paymentService.getByUser(userId);
         return payments.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

@@ -22,7 +22,7 @@ public class PaymentService {
         return paymentDomainRepository.savePayment(paymentDomain);
     }
 
-    public Optional<List<PaymentDomain>> getByUser(String domainIdUser){
+    public Optional<List<PaymentDomain>> getByUser(int domainIdUser){
         return paymentDomainRepository.getByUser(domainIdUser);
     }
 
