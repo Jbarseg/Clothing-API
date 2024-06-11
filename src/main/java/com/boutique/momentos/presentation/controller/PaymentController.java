@@ -20,14 +20,12 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    // Obtener todos los pagos
     @GetMapping
     public ResponseEntity<List<PaymentDomain>> getAllPayments() {
         List<PaymentDomain> payments = paymentService.getAll();
         return new ResponseEntity<>(payments, HttpStatus.OK);
     }
 
-    // Obtener un pago por su ID
     @GetMapping("/{id}")
     public ResponseEntity<PaymentDomain> getPaymentById(@PathVariable("id") int id) {
         Optional<PaymentDomain> payment = paymentService.getPayment(id);
@@ -35,7 +33,6 @@ public class PaymentController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Obtener todos los pagos asociados a un usuario específico
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<PaymentDomain>> getPaymentsByUser(@PathVariable("userId") int userId) {
         Optional<List<PaymentDomain>> payments = paymentService.getByUser(userId);
@@ -54,7 +51,6 @@ public class PaymentController {
             PaymentDomain payment = new PaymentDomain();
             payment.setDomainIdUser(userId);
             payment.setDomainImageData(imageData);
-            // Obtener la fecha y hora actuales
             LocalDateTime paymentDate = LocalDateTime.now();
             payment.setDomainPaymentDate(paymentDate);
             PaymentDomain savedPayment = paymentService.savePayment(payment);
@@ -64,8 +60,8 @@ public class PaymentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    // Eliminar un pago por su ID
-    @DeleteMapping("/{id}")
+
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deletePayment(@PathVariable("id") int id) {
         boolean deleted = paymentService.delete(id);
         if (deleted) {

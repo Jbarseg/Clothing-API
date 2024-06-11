@@ -120,7 +120,6 @@
     <script>
         // Función para agregar un elemento al carrito
         function addToCart(productName, quantity, price) {
-            // Crear un nuevo elemento de lista para el carrito
             var newItem = document.createElement("li");
             newItem.classList.add("cart-item");
             newItem.innerHTML = `
@@ -149,7 +148,7 @@
 
         // Función para enviar la imagen al servidor
         function uploadImage(event) {
-            event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+            event.preventDefault();
             var formData = new FormData();
             var imageFile = document.getElementById("paymentImage").files[0];
             formData.append("userId", 2);
@@ -165,7 +164,6 @@
                 },
                 error: function (xhr, status, error) {
                     console.error("Error al subir la imagen:", error);
-                    // Aquí puedes mostrar un mensaje de error al usuario
                 }
             });
         }

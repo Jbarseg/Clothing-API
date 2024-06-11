@@ -27,6 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
 
+        // Aquí no se aplica codificación, simplemente se compara la contraseña ingresada con la almacenada
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
